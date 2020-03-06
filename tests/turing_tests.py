@@ -2,7 +2,7 @@ from sources.turing import Tape, Move, Turing
 import unittest
 
 
-class MyTestCase(unittest.TestCase):
+class TuringTests(unittest.TestCase):
     def test_tape(self):
         string = 'test string'
         dummy = Tape(string)
