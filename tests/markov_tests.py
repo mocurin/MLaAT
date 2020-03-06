@@ -15,7 +15,7 @@ class MarkovTests(unittest.TestCase):
             ('*', '.1'),
             ('1', '*#')
         ]
-        m = Markov(rules)
+        m = Markov(rules, verbose=True)
         f = lambda x: (2 * x + 3) // 7
         for i in range(100):
             self.assertEqual(
@@ -34,7 +34,7 @@ class MarkovTests(unittest.TestCase):
             ('**', '.'),
             ('', '*')
         ]
-        m = Markov(rules)
+        m = Markov(rules, verbose=True)
         f = lambda: ''.join('a' if x > random.randrange(0, 25) else 'b'
                             for x in random.sample(range(0, 25), 25))
         for _ in range(0, 100):

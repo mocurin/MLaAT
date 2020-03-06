@@ -4,6 +4,14 @@
 
 from builtins import str
 from typing import List, Tuple
+from tools import Logger
+
+
+# Logging utils
+_markov_logger = Logger()
+_markov_logger['start'] = lambda string: print(f"Start: '{string}'")
+_markov_logger['stop'] = lambda string: print(f"Stop: '{string}'")
+_markov_logger['process'] = lambda occ, rep, string: print(f"Rule: '{occ}'->'{rep}'; Result: '{string}'")
 
 
 Rule = Tuple[str, str]
@@ -21,22 +29,22 @@ class Markov:
         self._stop = stop
         self.verbose = verbose
 
-    def __call__(self,
-                 string: str):
+    def __call__(self, string: str):
         backup = ''
-        if self.verbose: print(f"Start: '{string}'")
+        self._log('start', string)
         while backup != string and self._stop not in string:
             backup = string
             string = self._next_rule(string)
-        if self.verbose: print(f"Stop: '{string}'")
+        self._log('stop', string)
         return string.replace(self._stop, '', 1)
 
     def _next_rule(self, string: str) -> str:
         for occ, rep in self._rules:
             if occ in string:
                 string = string.replace(occ, rep, 1)
-                if self.verbose:
-                    print(f"Rule: '{occ}' -> '{rep}'")
-                    print(f"Result: '{string}'")
+                self._log('process', occ, rep, string)
                 break
         return string
+
+    def _log(self, *args, **kwargs):
+        if self.verbose: _markov_logger(*args, **kwargs)
