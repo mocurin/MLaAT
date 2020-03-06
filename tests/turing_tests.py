@@ -16,10 +16,10 @@ class MyTestCase(unittest.TestCase):
 
     def test_turing(self):
         program = [
-            ((0, 'a'), (0, 'b', Move.Right)),
-            ((0, 'b'), (0, 'a', Move.Right))
+            ((0, 'a'), (0, 'b', Move.R)),
+            ((0, 'b'), (0, 'a', Move.R))
         ]
-        t = Turing(program)
+        t = Turing(program, verbose=True)
         self.assertEqual(t('aabbabab'), 'bbaababa')
 
 
