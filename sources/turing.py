@@ -1,6 +1,7 @@
-from typing import NamedTuple, List, Tuple, Dict, Iterable
-from enum import IntEnum
 from builtins import str
+from enum import IntEnum
+from typing import NamedTuple, List, Tuple, Dict, Iterable
+
 from tools import Logger
 
 # Logging utils

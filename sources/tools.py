@@ -1,13 +1,25 @@
-from typing import Dict, Callable
+from typing import Dict, Callable, Iterable
 
 
 def to_ones(num: int) -> str:
-    assert num >= 0, 'Number must be positive'
+    assert not num < 0, 'Number must be positive'
     return '1' * (num + 1)
 
 
 def from_ones(num: str) -> int:
     return len(num) - 1
+
+
+def load_file(path: str):
+    with open(path, 'r') as file:
+        return file.read()
+
+
+def on_condition(iterable: Iterable, condition):
+    res = []
+    for elem in iterable:
+        if condition(elem): res.append(elem)
+    return res
 
 
 class Logger:

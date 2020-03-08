@@ -1,9 +1,6 @@
-# Normal Markov algorithms
-# '' is an empty symbol
-# !!! RN there are no checks for alphabet intersections !!!
-
 from builtins import str
 from typing import List, Tuple
+
 from tools import Logger
 
 
