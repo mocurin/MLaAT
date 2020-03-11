@@ -22,6 +22,33 @@ def on_condition(iterable: Iterable, condition):
     return res
 
 
+# Dict is too muсh for such a simple structure. Also tried
+# collections.deque as _data, but it does not have __setitem__()
+class Tape:
+    _data: Dict[int, str]
+    sep: str
+
+    def __init__(self, data: Iterable, sep=''):
+        self._data = {i: e for i, e in enumerate(data)}
+        self.sep = sep
+
+    def __getitem__(self, item: int) -> str:
+        if item not in self._data.keys():
+            # Empty cells can be used as spaces (can they?)
+            self._data[item] = ' '
+            return ''
+        return self._data[item]
+
+    def __setitem__(self, key, value):
+        self._data[key] = value
+
+    def __str__(self):
+        return self.sep.join(self._data[i] for i in sorted(self._data.keys())).strip()
+
+    def as_list(self):
+        return list(self._data[i] for i in sorted(self._data.keys()))
+
+
 class Logger:
     _states: Dict[int, Callable]
 
