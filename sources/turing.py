@@ -1,7 +1,8 @@
-from typing import NamedTuple, List, Tuple, Dict, Iterable
-from enum import IntEnum
 from builtins import str
-from tools import Logger
+from enum import IntEnum
+from typing import NamedTuple, List, Tuple, Iterable
+
+from tools import Logger, Tape
 
 # Logging utils
 _turing_logger = Logger()
@@ -30,28 +31,6 @@ Replacement = NamedTuple('Replacement', [('state', int),
 Rule = Tuple[Condition, Replacement]
 
 
-# Dict is too muсh for such a simple structure. Also tried
-# collections.deque as _data, but it does not have __setitem__()
-class Tape:
-    _data: Dict[int, str]
-
-    def __init__(self, string: str):
-        self._data = {i: e for i, e in enumerate(string)}
-
-    def __getitem__(self, item: int) -> str:
-        if item not in self._data.keys():
-            # Empty cells can be used as spaces (can they?)
-            self._data[item] = ' '
-            return ''
-        return self._data[item]
-
-    def __setitem__(self, key, value):
-        self._data[key] = value
-
-    def __str__(self):
-        return ''.join(self._data[i] for i in sorted(self._data.keys())).strip()
-
-
 class Turing:
     _program: List[Rule]
     _state: int
@@ -60,6 +39,7 @@ class Turing:
                  program: Iterable,
                  state=0, *,
                  verbose=False):
+
         # TODO(Mocurin) add string support
         self._program = Turing._parse_iterable(program)
         self._state = state
